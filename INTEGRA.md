@@ -1,6 +1,10 @@
 # WMSExpert Integra
 **Documentação de integração WMSExpert**
 
+> Em todo campo de um <strong>JSON</strong> que apresentar antes dos dois pontos (:) o ponto de interrogação (?) significará que o campo não é obrigatório ser passado.
+
+> Os campos <strong>page</strong> e <strong>size</strong> sempre que solicitados em uma requisição serão obrigatórios.
+
 # Autenticação <br />
 
 > É o primeiro processo que tem que ser feito para poder usar a api. Ela retornará o token de acesso fundamental para o funcionamento e segurança da aplicação.
@@ -60,103 +64,167 @@
 ]
 ```
 
-> ### View de clientes WMS_CLIENTE
+### Buscar Produto <br />
 
-``` 
-CREATE VIEW WMS_CLIENTE AS 
-SELECT 
-codClienteErp,
-tipo,
-cpfCnpj,
-nomCliente,
-nomFantasia,
-codCidadeIbge,
-endereco,
-numEndereco,
-bairro,
-cep,
-celular,
-email,
-codRota,
-desRota,
-latitude,
-longitude,
-shelf
-FROM CLIENTES
+> O método de envio para pegar um produto específico cadastrado dentro do sistema. URL de envio e o método de envio correspondente.
+
+```
+    get: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/produto/[{idDoProdutoProcurado}]   
 ```
 
-**codClienteErp:** *O campo deve ser **varchar(20)**, contendo o codigo do cliente do ERP o campo e chave primaria e **obrigatorio**.* <br />
-**tipo:** *O campo deve ser **inteiro** contendo 0 para pessoa fisica e 1 para pessoa juridica o campo e **obrigatorio**.* <br />
-**cpfCnpj:** *O campo deve ser **varchar(14)** contendo a inscrição da pessoa fisica ou juridica o campo e **obrigatorio**.* <br />
-**nomCliente:** *O campo deve ser **varchar(60)** contendo a razão social do cliente o campo e **obrigatorio**.* <br />
-**nomFantasia:** *O campo deve ser **varchar(60)** contendo o nome fantasia do cliente o campo e **obrigatorio**.* <br />
-**codCidadeIBGE:** *O campo deve ser **inteiro**, o mesmo e chave primaria o campo e **obrigatorio**.* <br />
-**endereco:** *O campo deve ser **varchar(60)** contendo o endereço do cliente o campo e **obrigatorio**.* <br />
-**numEndereco:** *O campo deve ser **varchar(10)** contendo o numero do endereço do cliente o campo e **obrigatorio**.* <br />
-**bairro:** *O campo deve ser **varchar(30)** contendo a descrição do bairro do cliente o campo e **obrigatorio**.* <br />
-**cep:** *O campo deve ser **varchar(8)** contendo o contendo o codigo postal do cliente o campo e **obrigatorio**.* <br />
-**celular:** *O campo deve ser **varchar(10)** contendo o telefone do cliente.* <br />
-**email:** *O campo deve ser **varchar(50)** contendo o e-mail do cliente.* <br />
-**codRota:** *O campo deve ser **inteiro** contendo o codigo da rota.* <br />
-**desRota:** *O campo deve ser **varchar(60)** contendo a descrição da rota.* <br />
-**latitude:** *O campo deve ser **numeric(18,7)** contendo a latitudo do cliente.* <br />
-**longitude:** *O campo deve ser **numeric(18,7)** contendo a longitude do cliente.* <br />
-**shelf:** *O campo deve ser **inteiro** contendo a quantidade de dias do shelf do cliente.* <br /><br />
+> A api retornará, caso existente, o produto na seguinte estrutura.
 
 
-> ### View de embalagens WMS_EMBALAGEM
-
-``` 
-CREATE VIEW WMS_EMBALAGEM AS 
-SELECT 
-codEmbalagem,
-codFilial,
-codProdutoErp,
-aux,
-und,
-qtdUnit,
-embalagem,
-pesoLiquido,
-pesoBruto,
-volume,
-Ativo
-FROM EMBALAGENS
+```
+    {
+        "altura": integer,
+        "codigo": string,
+        "codigoref": string,
+        "controlalote": boolean,
+        "controlanumserie": boolean,
+        "controlavalidade": boolean,
+        "empresa": integer,
+        "endereco": integer,
+        "estoquemaximo": integer,
+        "estoqueminimo": integer,
+        "fornecedor": integer,
+        "grupo": integer,
+        "id": integer,
+        "lastro": integer,
+        "nome": string,
+        "pesobruto": integer,
+        "pesoliquido": integer,
+        "shelflife": integer,
+        "subgrupo": integer,
+        "unidadepadrao": string
+    }
 ```
 
-**codEmbalagem:** *Enviar o campo como **NULL**.* <br />
-**codFilial:** *O campo deve ser **inteiro**, o mesmo e chave primaria o campo e **obrigatorio**.* <br />
-**codProdutoErp:** *O campo deve possuir a chave estrangeira do produto o campo e **obrigatorio**.* <br />
-**aux:** *O campo deve ser **varchar(20)** contendo o codigo de barras do produto o campo e **obrigatorio**.* <br />
-**und:** *O campo deve ser **varchar(3)** contendo a descrição reduzida da embalagem o campo e **obrigatorio**.* <br />
-**qtdUnit:** *O campo deve ser **numerico(12,2)**, contendo o fator de conversão da unidade o campo e **obrigatorio** e tem de ser diferente de zero.* <br />
-**embalagem:** *O campo deve ser **varchar(20)** contendo a descrição da embalagem o campo e **obrigatorio**.* <br />
-**pesoLiquido:** *O campo deve ser **numeric(18,4)** contendo o peso liquido da embalagem.* <br />
-**pesoBruto:** *O campo deve ser **numeric(18,4** contendo o peso bruto da embalagem.* <br />
-**volume:** *O campo deve ser **numeric(18,2)** contendo a o volume em **m3** da embalagem.* <br />
-**ativo:** *O campo deve ser **inteiro** contendo 1 para ativo e 0 para inativo o campo e **obrigatorio**.* <br /><br />
 
-> ### View de estoque WMS_ESTOQUE
+### Filtrar Produtos <br />
 
-``` 
-CREATE VIEW WMS_ESTOQUE AS 
-SELECT 
-codFilialErp,
-codProdutoErp,
-qtdEstoque,
-lote,
-validade,
-numeroSerie
-FROM ESTOQUE
+> O método de envio para pegar produtos cadastrados que atendam os valores dos campos passados dentro da request. Abaixo a URL de envio e o método de envio correspondente.
+
+```
+    get: https://wmsexpert-api-55cc6cff3437.herokuapp.com/produto/geral/filtro   
 ```
 
-**codFilialErp:** *O campo deve ser **inteiro**, o mesmo e chave primaria o campo e **obrigatorio**.* <br />
-**codProdutoErp:** *Chave estrangeira do codigo do produto o campo e **obrigatorio**.* <br />
-**qtdEstoque:** *O campo deve ser **numerico(18,2)**, contendo a quantidade de estoque do produto o campo e **obrigatorio**.* <br />
-**lote:** *O campo deve ser **varchar(50)**, contendo o lote do produto.* <br />
-**validade:** *O campo deve ser **date**, contendo a data de validade do produto.* <br />
-**numeroSerie:** *O campo deve ser **varchar(50)**, contendo o numero de serie do produto.* <br /><br />
+> Tipos que poderão ser passados dentro do campo sort.
 
-> ### View de filial WMS_FILIAL
+```
+  [ 
+    "altura", 
+  "unidadepadrao", 
+  "subgrupo", 
+  "shelflife", 
+  "pesoliquido", 
+  "pesobruto", 
+  "nome", 
+  "lastro", 
+  "id", 
+  "grupo", 
+  "fornecedor", 
+  "estoqueminimo", 
+  "endereco", 
+  "empresa", 
+  "controlavalidade", 
+  "codigo", 
+  "codigoref", 
+  "controlalote", 
+  "controlanumserie" 
+  ]
+```
+
+> A seguir os parametros a serem passados na request: 
+
+```
+    {
+        page: integer,
+        size: integer,
+        sort?: enum,
+        idproduto?: integer,
+        codigo?: string,
+        descricao?: string,
+        idendereco?: integer       *obs: esse idendereco é associado ao produto. Portanto, não adiantará passar endereços aleatoriamentes, pois apenas trará caso exista algum produto associado. 
+    }
+```
+
+> A api retornará, caso existente, os produtos na seguinte estrutura.
+
+```
+   [
+     {
+        "altura": integer,
+        "codigo": string,
+        "codigoref": string,
+        "controlalote": boolean,
+        "controlanumserie": boolean,
+        "controlavalidade": boolean,
+        "empresa": integer,
+        "endereco": integer,
+        "estoquemaximo": integer,
+        "estoqueminimo": integer,
+        "fornecedor": integer,
+        "grupo": integer,
+        "id": integer,
+        "lastro": integer,
+        "nome": string,
+        "pesobruto": integer,
+        "pesoliquido": integer,
+        "shelflife": integer,
+        "subgrupo": integer,
+        "unidadepadrao": string
+    }
+   ]
+```
+
+### Busca de Produto Por Embalagem
+
+> O método de envio para pegar produtos cadastrados que atendam os valores dos campos passados dentro da request. Abaixo a URL de envio e o método de envio correspondente.
+
+```
+    get: https://wmsexpert-api-55cc6cff3437.herokuapp.com/produto/geral/consulta   
+```
+
+> Há apenas um parametro a ser passado nessa request:
+
+```
+    {
+        codbarraprod: string
+    }
+```
+
+> A api retornará, caso existente, os produtos na seguinte estrutura.
+
+```
+   [
+     {
+        "altura": integer,
+        "codigo": string,
+        "codigoref": string,
+        "controlalote": boolean,
+        "controlanumserie": boolean,
+        "controlavalidade": boolean,
+        "empresa": integer,
+        "endereco": integer,
+        "estoquemaximo": integer,
+        "estoqueminimo": integer,
+        "fornecedor": integer,
+        "grupo": integer,
+        "id": integer,
+        "lastro": integer,
+        "nome": string,
+        "pesobruto": integer,
+        "pesoliquido": integer,
+        "shelflife": integer,
+        "subgrupo": integer,
+        "unidadepadrao": string
+    }
+   ]
+```
+
+
+### Salvar Produto
 
 ``` 
 CREATE VIEW WMS_FILIAL AS 
