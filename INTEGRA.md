@@ -226,66 +226,719 @@
 
 ### Salvar Produto
 
-``` 
-CREATE VIEW WMS_FILIAL AS 
-SELECT 
-codFilialErp,
-nomeFilial,
-nomeFantasia,
-cnpj,
-ativo,
-codCidadeIbge
-FROM FILIAL
+> O método de gravação de produto. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/produto   
 ```
 
-**codFilialErp:** *O campo deve ser **varchar(100)** contendo o codigo da filial esse campo e chave primaria e **obrigatorio**.* <br />
-**nomeFilial:** *O campo deve ser **varchar(50)** contendo o nome da filial o campo e **obrigatorio**.* <br />
-**nomeFantasia:** *O campo deve ser **varchar(50)** contendo a fantasia da filial o campo e **obrigatorio**.* <br />
-**cnpj:** *O campo deve ser **varchar(17)**, contendo o cnpj da filial o campo e **obrigatorio**.* <br />
-**ativo:** *O campo deve ser **inteiro**, contendo 1 para ativo e 0 para inativo o campo e **obrigatorio**.* <br />
-**codCidadeIbge:** *O campo deve ser **inteiro**, contendo o codigo da cidadeIbge.* <br /><br />
+> A estrutura do produto precisa seguir as seguinte regra.
 
-> ### View de fornecedor WMS_FORNECEDOR
-
-``` 
-CREATE VIEW WMS_FORNECEDOR AS 
-SELECT 
-codFornecedorErp,
-nomeFornecedor,
-nomeFantasia,
-tipo,
-cnpjcpf,
-endereco,
-numEndereco,
-bairro,
-codCidadeIbge,
-cep
-FROM FORNECEDOR
+```
+    {
+        "altura": integer,
+        "codigo": string,
+        "codigoref": string,
+        "controlalote": boolean,
+        "controlanumserie": boolean,
+        "controlavalidade": boolean,
+        "embalagens": [
+            {
+                "altura": integer,
+                "ativo": boolean,
+                "codbarra": string,
+                "codigo": string,
+                "embalagem": string,
+                "largura": integer,
+                "m3": integer,
+                "pesobruto": integer,
+                "pesoliquido": integer,
+                "profundidade": integer,
+                "quantidade": integer,
+                "tipo": integer
+            }
+        ],
+        "endereco": integer,
+        "estoquemaximo": integer,
+        "estoqueminimo": integer,
+        "fornecedor": integer,
+        "grupo": integer,
+        "lastro": integer,
+        "nome": string,
+        "pesobruto": integer,
+        "pesoliquido": integer,
+        "shelflife": integer,
+        "subgrupo": integer,
+        "unidadepadrao": string
+    }
 ```
 
-**codFornecedorErp:** *O campo deve ser **varchar(20)**, contendo o codigo do fornecedor esse campo e chave primaria e **obrigatorio**.* <br />
-**nomeFornecedor:** *O campo deve ser **varchar(60)** contendo a razão social do fornecedor o campo e **obrigatorio**.* <br />
-**nomeFantasia:** *O campo deve ser **varchar(50)** contendo o nome fantasia do fornecedor o campo e **obrigatorio**.* <br />
-**tipo:** *O campo deve ser **inteiro** contendo 0 para pessoa fisica e 1 para pessoa juridica o campo e **obrigatorio**.* <br />
-**cpfCnpj:** *O campo deve ser **varchar(14)** contendo a inscrição da pessoa fisica ou juridica o campo e **obrigatorio**.* <br />
-**endereco:** *O campo deve ser **varchar(60)** contendo o endereço do fornecedor.* <br />
-**numEndereco:** *O campo deve ser **varchar(10)** contendo o numero do endereço do fornecedor.* <br />
-**bairro:** *O campo deve ser **varchar(30)** contendo a descrição do bairro do fornecedor.* <br />
-**codCidadeIBGE:** *O campo deve ser **inteiro**, o mesmo e chave primaria o campo e **obrigatorio**.* <br />
-**cep:** *O campo deve ser **varchar(8)** contendo o contendo o codigo postal do fornecedor.* <br /><br />
+### Editar Produto
 
+> O método de envio para pegar um produto específico cadastrado e atualizar. URL de envio e o método de envio correspondente.
 
-> ### View de funcionario WMS_FUNCIONARIO
-
-``` 
-CREATE VIEW WMS_FUNCIONARIO AS 
-SELECT 
-codFuncionarioErp,
-nomefuncionario,
-ativo
-FROM FUNCIONARIO
+```
+    put: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/produto/geral/{[idproduto]}   
 ```
 
-**codFuncionarioErp:** *O campo deve ser  **varchar(20)**, contendo o codigo do funcionario esse campo e chave primaria e **obrigatorio**.* <br />
-**nomefuncionario:** *O campo deve ser **varchar(60)** contendo o nome do funcionario o campo e **obrigatorio**.* <br />
-**ativo:** *O campo deve ser **inteiro** contendo 0 para inativo e 1 para ativo o campo e **obrigatorio**.* <br /><br />
+> A estrutura do produto precisa seguir as seguinte regra.
+
+```
+    {
+        "altura": integer | null,
+        "codigo": string,
+        "codigoref": string,
+        "controlalote": boolean,
+        "controlanumserie": boolean,
+        "controlavalidade": boolean,
+        "endereco": integer | null,
+        "estoquemaximo": integer,
+        "estoqueminimo": integer,
+        "fornecedor": integer,
+        "grupo": integer | null,
+        "lastro": integer,
+        "nome": string,
+        "pesobruto": integer | null,
+        "pesoliquido": integer | null,
+        "shelflife": integer | null,
+        "subgrupo": integer | null,
+        "unidadepadrao": string
+    }
+```
+
+### Deletar Produto
+
+> O método de envio para deletar um produto. URL de envio e o método de envio correspondente.
+
+```
+    delete: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/produto/{[idproduto]}   
+```
+
+# Embalagem
+
+> As embalagens cadastras no sistema.
+
+
+### Salvar Embalagem
+
+> O método de envio gravar uma embalagem. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/produto/embalagem   
+```
+
+> A estrutura do produto precisa seguir as seguinte regra.
+
+```
+    {
+        "codigo" : string,
+        "produto" : integer, * obs => Aqui é o id do produto existente no sistema.
+        "codbarra" : string,
+        "embalagem" : string,
+        "quantidade" : double,
+        "ativo" : boolean,
+        "tipo" : integer,   * obs => Precisa ser um id de tipo cadastrado no sistema.
+        "largura" : double | null,
+        "altura" : double | null,
+        "profundidade" : double | null,
+        "m3" : double | null,
+        "pesobruto" : double | null,
+        "pesoliquido" : double | null 
+    }
+```
+
+### Editar Embalagem 
+
+> O método de envio para pegar e gravar os campos alterados de uma embalagem. URL de envio e o método de envio correspondente.
+
+```
+    put: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/produto/embalagem/[{idEmbalagem}]   
+```
+
+> A estrutura da embalagem precisa seguir as seguinte regra.
+
+```
+    {
+        "codigo" : string,
+        "produto" : integer, * obs => Aqui é o id do produto existente no sistema.
+        "codbarra" : string,
+        "embalagem" : string,
+        "quantidade" : double,
+        "ativo" : boolean,
+        "tipo" : integer,   * obs => Precisa ser um id de tipo cadastrado no sistema.
+        "largura" : double | null,
+        "altura" : double | null,
+        "profundidade" : double | null,
+        "m3" : double | null,
+        "pesobruto" : double | null,
+        "pesoliquido" : double | null 
+    }
+```
+
+### Deletar Embalagem
+
+> O método de envio para deletar um produto. URL de envio e o método de envio correspondente.
+
+```
+    delete: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/produto/embalagem/{[idEmbalagem]}   
+```
+
+# Fornecedores
+
+> As fornecedores cadastros no sistema.
+
+
+### Salvar Fornecedor
+
+> O método de envio gravar uma embalagem. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/fornecedor  
+```
+
+> A estrutura do fornecedor precisa seguir as seguinte regra.
+
+```
+    {
+        "codigo" : string,
+        "nome" : string,
+        "nomefantasia" : string,
+        "cpf" : string,
+        "ie" : string,
+        "estado" : string,
+        "codcidade" : string,
+        "bairro" : string,
+        "endereco" : string,
+        "telefone" : string
+    }
+```
+
+### Editar Fornecedor
+
+> O método de envio para pegar e gravar os campos alterados de uma fornecedor. URL de envio e o método de envio correspondente.
+
+```
+    put: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/fornecedor/[{idFornecedor}]   
+```
+
+> A estrutura do fornecedor precisa seguir as seguinte regra.
+
+```
+    {
+        "codigo" : string,
+        "nome" : string,
+        "nomefantasia" : string,
+        "cpf" : string,
+        "ie" : string,
+        "estado" : string,
+        "codcidade" : string,
+        "bairro" : string,
+        "endereco" : string,
+        "telefone" : string
+    }
+```
+
+### Deletar Fornecedor
+
+> O método de envio para deletar um fornecedor. URL de envio e o método de envio correspondente.
+
+```
+    delete: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/fornecedor/{[idFornecedor]}   
+```
+
+
+# Cliente
+
+> Os clientes cadastros no sistema.
+
+
+### Salvar Cliente
+
+> O método de envio gravar um cliente. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/cliente/geral  
+```
+
+> A estrutura do json cliente precisa seguir as seguinte regra.
+
+```
+    {
+        "codigo" : string,
+        "rota" : integer,  * obs => id da rota cadastrado no sistema.
+        "cpfcnpj" : string,
+        "nome" : string,
+        "ie" : string,
+        "codcidade" : integer,
+        "nomecidade" : string,
+        "endereco" : string,
+        "complemento" : string,
+        "numero" : integer,
+        "bairro" : string,
+        "cep" : string,  * obs => 8 numeros obrigatório 
+        "telefone" : string,  * obs => minimo de 12 digítos, maximo de 14 minimos. 
+        "email" : string,
+        "ativo" : boolean,
+        "latitude" : string,
+        "longetude" : string,
+        "shelflife" : string
+    }
+```
+
+### Editar Cliente
+
+> O método de envio para pegar e gravar os campos alterados de um cliente. URL de envio e o método de envio correspondente.
+
+```
+    put: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/cliente/geral/[{idCliente}]   
+```
+
+> A estrutura do cliente precisa seguir as seguinte regra.
+
+```
+    {
+        "codigo" : string,
+        "rota" : integer,  * obs => id da rota cadastrado no sistema.
+        "cpfcnpj" : string,
+        "nome" : string,
+        "ie" : string,
+        "codcidade" : integer,
+        "nomecidade" : string,
+        "endereco" : string,
+        "complemento" : string,
+        "numero" : integer,
+        "bairro" : string,
+        "cep" : string,  * obs => 8 numeros obrigatório 
+        "telefone" : string,  * obs => minimo de 12 digítos, maximo de 14 minimos. 
+        "email" : string,
+        "ativo" : boolean,
+        "latitude" : string,
+        "longetude" : string,
+        "shelflife" : string
+    }
+```
+
+### Deletar Cliente
+
+> O método de envio para deletar um cliente. URL de envio e o método de envio correspondente.
+
+```
+    delete: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/cliente/geral/[{idCliente}]   
+```
+
+# Rota
+
+> As rotas cadastras no sistema.
+
+### Salvar Rotas
+
+> O método de envio gravar uma rota. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/cliente/rota  
+```
+
+> A estrutura da rota precisa seguir as seguinte regra.
+
+```
+    {
+       "codigo" : string,
+        "regiao" : integer,  * obs => id da região que foi cadastrado no sistema.
+        "nome" : string,
+        "ativo" : boolean
+    }
+```
+
+### Editar Rota
+
+> O método de envio para pegar e gravar os campos alterados de uma rota. URL de envio e o método de envio correspondente.
+
+```
+    put: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/cliente/rota/[{idRota}]   
+```
+
+> A estrutura do produto precisa seguir as seguinte regra.
+
+```
+   {
+       "codigo" : string,
+        "regiao" : integer,  * obs => id da região que foi cadastrado no sistema.
+        "nome" : string,
+        "ativo" : boolean
+    }
+```
+
+### Deletar Rota
+
+> O método de envio para deletar um rota. URL de envio e o método de envio correspondente.
+
+```
+    delete: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/cliente/rota/[{idCliente}]   
+```
+
+# Transportadora
+
+> As transportadoras cadastras no sistema.
+
+### Salvar Transportadora
+
+> O método de envio gravar uma transportadora. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/transportadora/geral  
+```
+
+> A estrutura da rota precisa seguir as seguinte regra.
+
+```
+    {
+        "tipo" : integer,
+        "nome" : string,
+        "nomefantasia" : string,
+        "cpfcnpj" : string,
+        "ie" : string,
+        "estado" : string,
+        "codcidade" : interger,
+        "endereco" : string,
+        "complemento" : string,
+        "numero" : integer,
+        "bairro" : string,
+        "cep" : string,    *obs => necessário ter 8 digítos.
+        "telefone" : string,
+        "contato" : string,
+        "ativo" : boolean,
+        "obs" : string,
+        "email" : string
+    }
+```
+
+### Editar Transportadora
+
+> O método de envio para pegar e gravar os campos alterados de uma transportadora. URL de envio e o método de envio correspondente.
+
+```
+    put: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/transportadora/geral/[{idTransportadora}]   
+```
+
+> A estrutura da transportadora precisa seguir as seguinte regra.
+
+```
+   {
+        "tipo" : integer,
+        "nome" : string,
+        "nomefantasia" : string,
+        "cpfcnpj" : string,
+        "ie" : string,
+        "estado" : string,
+        "codcidade" : interger,
+        "endereco" : string,
+        "complemento" : string,
+        "numero" : integer,
+        "bairro" : string,
+        "cep" : string,    *obs => necessário ter 8 digítos.
+        "telefone" : string,
+        "contato" : string,
+        "ativo" : boolean,
+        "obs" : string,
+        "email" : string
+    }
+```
+
+### Deletar Transportadora
+
+> O método de envio para deletar um transportadora. URL de envio e o método de envio correspondente.
+
+```
+    delete: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/transportadora/geral/[{idTransportadora}]   
+```
+
+
+# Veículos
+
+> Os veiculos das transportadoras cadastrados no sistema.
+
+### Salvar Veículos
+
+> O método de envio gravar uma transportadora. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/transportadora/veiculo  
+```
+
+> A estrutura do json veículo precisa seguir as seguinte regra.
+
+```
+    {
+       "codigo" : string,
+        "nome" : string,
+        "nomefantasia" : string,
+        "chassi" : string,
+        "transportadora" : integer,  * obs => obrigatóriamente, precisa ser o id de uma transportadora cadastrada.
+        "taraveiculo" : double,
+        "pesominimo" : double,
+        "pesomaximo" : double,
+        "lastro" : double,
+        "altura" : double,
+        "profundidade" : double,
+        "m3" : double,
+        "ativo" : boolean
+    }
+```
+
+### Editar Veículo
+
+> O método de envio para pegar e gravar os campos alterados de uma Veículo. URL de envio e o método de envio correspondente.
+
+```
+    put: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/transportadoraveiculo/[{idVeiculo}]   
+```
+
+> A estrutura da transportadora precisa seguir as seguinte regra.
+
+```
+      {
+       "codigo" : string,
+        "nome" : string,
+        "nomefantasia" : string,
+        "chassi" : string,
+        "transportadora" : integer,  * obs => obrigatóriamente, precisa ser o id de uma transportadora cadastrada.
+        "taraveiculo" : double,
+        "pesominimo" : double,
+        "pesomaximo" : double,
+        "lastro" : double,
+        "altura" : double,
+        "profundidade" : double,
+        "m3" : double,
+        "ativo" : boolean
+    }
+```
+
+### Deletar Veículo
+
+> O método de envio para deletar um veículo. URL de envio e o método de envio correspondente.
+
+```
+    delete: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/transportadoraveiculo/[{idVeiculo}]   
+```
+
+
+# Pedido
+
+> Integração com pedidos cadastrados no sistema.
+
+### Salvar Pedidos
+
+> O método de envio gravar um pedido. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/integracao/pedido 
+```
+
+> A estrutura do json pedido precisa seguir as seguinte regra.
+
+```
+    {
+       "codigo" : "123666",
+    "cliente" : 1,
+    "vendedor" : "Fulano Teste 1",
+    "tipo" : 1,
+    "dataimportacao" : "20/05/2023 00:00:00",
+    "totalpedido" : 10.00,
+    "qtditens" : 2.00,
+    "ordempedido" : 1,
+    "status" : 1,
+    "dtexportacao" : "22/05/2023 00:00:00",
+    "itens" : [
+        {
+            "produto" : 18,
+            "quantidade" : 10,
+            "qtdseparada" : 5,
+            "qtdconferida" : 5,
+            "qtdcortada" : 5,
+            "itempedido" : 1
+        }
+    ]
+    }
+```
+
+### Editar Pedido
+
+> O método de envio para pegar e gravar os campos alterados de um pedido. URL de envio e o método de envio correspondente.
+
+```
+    put: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/integracao/pedido/[{idVeiculo}]   
+```
+
+> A estrutura do pedido precisa seguir as seguinte regra.
+
+```
+    {
+        "codigo" : string,
+        "cliente" : integer,  * obs => id do cliente cadastrado no sistema. 
+        "vendedor" : string,
+        "tipo" : integer, 
+        "dataimportacao" : datetime, * obs => formato: "20/05/2023 00:00:00"
+        "totalpedido" : double,
+        "qtditens" : double,
+        "ordempedido" : integer,
+        "status" : integer,
+        "dtexportacao" : datetime, * obs => formato: "20/05/2023 00:00:00"
+        "itens" : [
+            {
+                "produto" : integer,
+                "quantidade" : integer,
+                "qtdseparada" : integer,
+                "qtdconferida" : integer,
+                "qtdcortada" : integer,
+                "itempedido" : integer
+            }
+        ] | null
+    }
+```
+
+### Deletar Pedido
+
+> O método de envio para deletar um pedido. URL de envio e o método de envio correspondente.
+
+```
+    delete: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/pedido/geral/[{idPedido}]   
+```
+
+
+
+# Nota Fiscal
+
+> Integração com as Notas Fiscais cadastradas no sistema.
+
+### Salvar Nota Fiscal Entrada
+
+> O método de envio gravar um nota fiscal e seus itens. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/integracao/nfentrada/nota
+```
+
+> A estrutura do json nota fiscal precisa seguir as seguinte regra.
+
+```
+    {
+       "codigo" : string,
+        "fornecedor" : integer,  * obs => id do fornecedor necessariamente cadastrado no sistema.
+        "tipo" : integer,  * obs => id do tipo necessariamente cadastrado no sistema.
+        "dataemissao" : date, * obs => formato "dd/mm/yyyy".
+        "quantidade" : double,
+        "numeronotafiscal" : string,
+        "serie" : string,
+        "quantidadevolume" : integer,
+        "valtotalproduto" : double,
+        "valtotalnota" : double,
+        "pesobruto" : double,
+        "pesoliquido" : double,
+        "situacao" : integer,
+        "qtdvolumeconf" : integer,
+        "itens" : [
+            {
+                "produto" : integer,
+                "fornecedor" : integer,
+                "quantidade" : integer,
+                "valunitario" : double,
+                "item" : string,
+                "validade" : date,  * obs => formato "dd/mm/yyyy".
+                "fabricacao" :  date,  * obs => formato "dd/mm/yyyy".
+                "lote" : string,
+                "numserie" : string
+            }
+        ]
+    }
+```
+
+### Salvar Carga Fiscal Entrada
+
+> O método de envio gravar um nota fiscal e seus itens. URL de envio e o método de envio correspondente.
+
+```
+    post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/integracao/nfentrada/carga
+```
+
+> A estrutura do json carga fiscal precisa seguir as seguinte regra.
+
+```
+    {
+        "deposito" : integer,  * obs => id de deposito cadastrado no sistema.
+        "datainicioconf" : datetime,  * obs => formato "20/02/2023 00:00:00"
+        "dataexportacaoerp" : datetime,  * obs => formato "20/02/2023 00:00:00"
+        "qtdvolumes" : integer,
+        "nome" : string,
+        "datafimconf" : datetime,  * obs => formato "20/02/2023 00:00:00"
+        "situacao" : integer,
+        "notas" : [
+            {
+                "codigo" : string,
+                "fornecedor" : integer < maior que 0 >,
+                "tipo" : integer < maior que 0 >,
+                "dataemissao" : date,  * obs => formato  "30/06/2023"
+                "quantidade" : double,
+                "numeronotafiscal" : string,
+                "serie" : string,
+                "quantidadevolume" : integer,
+                "valtotalproduto" : double,
+                "valtotalnota" : double,
+                "pesobruto" : double,
+                "pesoliquido" : double,
+                "situacao" : integer,
+                "qtdvolumeconf" : integer,
+                "itens" : [
+                    {
+                        "produto" : integer < maior que 0 >,  * obs => id do produto existente no sistema.
+                        "fornecedor" : integer < maior que 0 >,  * obs => id do fornecedor existente no sistema.
+                        "quantidade" : integer,
+                        "valunitario" : double,
+                        "item": string | null,
+                        "validade": date | null,  * obs => formato  "30/06/2023"
+                        "fabricacao": date | null,  * obs => formato  "30/06/2023"
+                        "lote" : string | null,
+                        "numserie" : string | null
+                    }
+                ]
+            }
+        ]
+    }
+```
+
+### Editar Nota Fiscal
+
+> O método de envio para pegar e gravar os campos alterados de uma nota fiscal. URL de envio e o método de envio correspondente.
+
+```
+    put: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/nfentrada/geral/[{idNotaFiscal}]   
+```
+
+> A estrutura da nota fiscal do tipo <strong>entrada</strong> precisa seguir as seguinte regra.
+
+```
+    {
+        "codigo" : string,
+        "fornecedor" : integer,
+        "tipo" : integer,  * obs => id do tipo.
+        "carga" : integer, * obs => id da carga.
+        "dataemissao" : date,  * obs => formato da date "07/12/2023"
+        "quantidade" : double,
+        "numeronotafiscal" : string,
+        "serie" : string,
+        "quantidadevolume" : integer,
+        "valtotalproduto" : double,
+        "valtotalnota" : double,
+        "pesobruto" : double,
+        "pesoliquido" : double,
+        "situacao" : integer,
+        "qtdvolumeconf" : integer
+    }
+```
+
+### Deletar Nota Fiscal Tipo Entrada
+
+> O método de envio para deletar uma nota fiscal entrada. URL de envio e o método de envio correspondente.
+
+```
+    delete: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/nfentrada/geral/[{idPedido}]   
+```
