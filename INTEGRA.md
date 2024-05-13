@@ -738,27 +738,27 @@
 
 ```
     {
-       "codigo" : "123666",
-    "cliente" : 1,
-    "vendedor" : "Fulano Teste 1",
-    "tipo" : 1,
-    "dataimportacao" : "20/05/2023 00:00:00",
-    "totalpedido" : 10.00,
-    "qtditens" : 2.00,
-    "ordempedido" : 1,
-    "status" : 1,
-    "dtexportacao" : "22/05/2023 00:00:00",
-    "itens" : [
-        {
-            "produto" : 18,
-            "quantidade" : 10,
-            "qtdseparada" : 5,
-            "qtdconferida" : 5,
-            "qtdcortada" : 5,
-            "itempedido" : 1
+       "codigo" : string,
+        "cliente" : integer,  * obs => id do cliente cadastrado no sistema.
+        "vendedor" : string,
+        "tipo" : integer,
+        "dataimportacao" : datetime,  * obs => formato "20/05/2023 00:00:00".
+        "totalpedido" : double,
+        "qtditens" : double,
+        "ordempedido" : integer,
+        "status" : integer,
+        "dtexportacao" : datetime,  * obs => formato "20/05/2023 00:00:00".
+        "itens" : [
+            {
+                "produto" : integer,
+                "quantidade" : integer,
+                "qtdseparada" : integer,
+                "qtdconferida" : integer,
+                "qtdcortada" : integer,
+                "itempedido" : integer
+            }
+        ]
         }
-    ]
-    }
 ```
 
 ### Editar Pedido
