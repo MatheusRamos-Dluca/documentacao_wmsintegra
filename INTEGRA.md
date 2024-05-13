@@ -3,7 +3,7 @@
 
 # Autenticação <br />
 
-> É o primeiro processo que tem que ser feito para poder usar a api. Ela retornará o token de acesso fundamental para o funcionamento e segurança da aplicação. <\br>
+> É o primeiro processo que tem que ser feito para poder usar a api. Ela retornará o token de acesso fundamental para o funcionamento e segurança da aplicação.
 
 ```
     post: https://wmsexpert-api-55cc6cff3437.herokuapp.com/api/auth   
@@ -19,6 +19,8 @@
     }
 
 ```
+
+# Produtos
 
 ### Lista de Produtos </br>
 
